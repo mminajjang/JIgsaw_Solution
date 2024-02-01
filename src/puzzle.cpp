@@ -9,14 +9,15 @@ void puzzlePiece::setPiece(cv::Mat img){
     corners = imageProcesser::find_corner(image);
     centre = imageProcesser::find_centre(contour);
     edges = imageProcesser::find_edges(contour, corners);
-    // std::vector<cv::Scalar> colours = {cv::Scalar((double)255,0,0), cv::Scalar(0,(double)255,0), cv::Scalar(0,0,(double)255), cv::Scalar((double)255,0,(double)255)};
-    // int c = 0;
-    // for (auto edge : edges){
-
-    //     for (auto e : edge){
-    //         cv::circle(image, e, 2, colours[c],2,8);
-    //     }c++;
-    // }
+//     std::vector<cv::Scalar> colours = {cv::Scalar((double)255,0,0), cv::Scalar(0,(double)255,0), cv::Scalar(0,0,(double)255), cv::Scalar((double)255,0,(double)255)};
+//     int c = 0;
+//    for(auto edge:edges){
+//     for(auto e: edge){
+//         cv::circle(image, e, 2, colours[c], 2, 8);
+//     }c++;
+//    }
+    
+    // helper::show(image);
     // cv::resize(image, image, cv::Size((int)image.rows/2, (int)image.cols/2));
     // std::cout << edges[2].front() << "  :  " <<edges[2].back() << std::endl;
     edgeImgs.clear();

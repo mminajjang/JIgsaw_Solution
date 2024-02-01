@@ -10,7 +10,7 @@ namespace helper
             {
                 cv::imshow(name, image);
             }
-            cv::destroyWindow(name);
+            // cv::destroyWindow(name);
         }
         catch (cv::Exception &e)
         {
@@ -167,9 +167,17 @@ namespace imageProcesser{
 
     POINTS2f find_corner(cv::Mat image){
         cv::Mat img = image.clone();
+        // std::cout<< "corners : " << std::endl;
         POINTS2f features = find_goodFeatures(img);
+        // std::cout<< "features done: " << std::endl;
+        // for(auto corner : features){
+        //     cv::circle(image, corner, 4, cv::Scalar(0,0,255), 4, 8);
+        // }
+        // helper::show(image);
         CONTOUR2f contour = find_contour(img);
+        // std::cout<< "contours done: " << std::endl;
         POINTS2f candidates = find_rectangle(features, cv::contourArea(contour), img);
+        // std::cout<< "candidate done: " << std::endl;
         
         std::vector<cv::Point2f> corners;
         for(auto candidate: candidates){
@@ -296,11 +304,14 @@ namespace imageProcesser{
         POINTS2f corner;
         double minLength = 10;//std::sqrt(cv::contourArea(find_contour(img))) / 6;
         cv::goodFeaturesToTrack(imgBin, corner, 0,0.1,minLength,cv::noArray(), 3, true);
+        if(corner.size() > 105){
+            cv::goodFeaturesToTrack(imgBin, corner,80,0.1,minLength,cv::noArray(), 3, true);
+        }
+        // std::cout << corner.size() <<std::endl;
         return corner;
     }
 
     POINTS2f find_rectangle(POINTS2f candidates, double area, cv::Mat image){
-
         double minDiff = 0.05;
         tryAgain:
         double minArea = area * 3/4;

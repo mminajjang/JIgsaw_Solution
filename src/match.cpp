@@ -500,6 +500,41 @@ namespace matchPuzzle{
         return canvas;
     }
 
+    cv::Mat draw_deque_map2(std::deque<std::deque<int>> map, std::vector<puzzlePiece> ps, int gap){
+    
+        cv::Mat canvas = cv::Mat(4000,4000,16, cv::Scalar::all(255));
+        std::cout <<" DRAWING CANVAS ... " << std::endl;
+        
+        int xi = 200; int yi = 200;
+        int row = 0; int col = 0;
+        int Rc = yi; int Cc = xi;
+        for(auto m : map){
+            Rc = (yi + gap*row);
+            for (auto ind : m ){
+                Cc = (xi + gap*col);
+                cv::Mat img = ps[ind].image;
+                // std::cout << img.rows << " :  "<<img.cols << std::endl; 
+                int refX = ps[ind].edges[0].front().x;
+                int refY = ps[ind].edges[0].front().y;
+                for(int r=0;r<img.rows; r++){
+                    for(int c=0;c<img.cols;c++){
+                        if(img.at<cv::Vec3b>(r,c)[0] != 255 || 
+                            img.at<cv::Vec3b>(r,c)[1] != 255 || 
+                            img.at<cv::Vec3b>(r,c)[2] != 255){
+                                canvas.at<cv::Vec3b>(Rc+r-refY, Cc+c-refX)[0] = img.at<cv::Vec3b>(r,c)[0];
+                                canvas.at<cv::Vec3b>(Rc+r-refY, Cc+c-refX)[1] = img.at<cv::Vec3b>(r,c)[1];
+                                canvas.at<cv::Vec3b>(Rc+r-refY, Cc+c-refX)[2] = img.at<cv::Vec3b>(r,c)[2];
+                        }
+                    }
+                }
+                col += 1;
+            }
+            col = 0;
+            row += 1;
+        }
+        return canvas;
+    }
+
     std::pair<int,int> find_couple(std::vector<puzzlePiece> & ps, int ref, int edgeIdx){
         double threshold = 2500.0;
         int a = edgeIdx;

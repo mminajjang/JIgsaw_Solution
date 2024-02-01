@@ -51,7 +51,8 @@ namespace matchPuzzle{
     void update_deque_map(std::deque<std::deque<int>> & map, int num, direction dir, int &curRow, int & curCol);
     
     cv::Mat draw_deque_map(std::deque<std::deque<int>> map, std::vector<puzzlePiece> ps);
-
+    cv::Mat draw_deque_map2(std::deque<std::deque<int>> map, std::vector<puzzlePiece> ps, int gap);
+    
     std::pair<int,int> find_couple(std::vector<puzzlePiece> & ps, int refIdx, int edgeIdx);
     void check(std::vector<puzzlePiece> & ps);
     std::deque<std::deque<int>> scoring_and_mapping(std::vector<puzzlePiece> & ps);
