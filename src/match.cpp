@@ -217,77 +217,6 @@ namespace matchPuzzle{
         std::cout << " \r SCORING  ... [ " << 100 << "% completed ]" <<std::endl;
     }
 
-    void set_score(std::vector<puzzlePiece> & ps){
-        std::vector<std::vector<double>> s = {
-            {0}, {-1}, {435}, {0},
-            {556}, {375}, {408}, {0},
-            {375}, {560}, {360}, {0},
-            {295}, {850}, {0}, {0},
-            {0}, {1084}, {550}, {-1},
-            {608}, {842}, {440}, {469},
-            {466}, {1061}, {-1}, {625},
-            {-1}, {657}, {0}, {908},
-            {0}, {294}, {308}, {1317},
-            {373}, {264}, {1069}, {927},
-            {1278}, {1340}, {811}, {863},
-            {601}, {344}, {0}, {713},
-            {0}, {0}, {614}, {240},
-            {529}, {0}, {1677}, {252},
-            {1707}, {0}, {2378}, {1545},
-            {2414}, {0}, {0}, {379}
-            };
-        std::vector<std::vector<int>> p = {
-            {0}, {-1}, {1}, {0},
-            {0}, {5}, {2}, {0},
-            {1}, {6}, {3}, {0},
-            {2}, {7}, {0}, {0},
-            {0}, {8}, {5}, {-1},
-            {4}, {9}, {6}, {1},
-            {5}, {10}, {-1}, {2},
-            {-1}, {11}, {0}, {3},
-            {0}, {12}, {9}, {4},
-            {8}, {13}, {10}, {5},
-            {9}, {14}, {11}, {6},
-            {10}, {15}, {0}, {7},
-            {0}, {0}, {13}, {8},
-            {12}, {0}, {14}, {9},
-            {13}, {0}, {15}, {10},
-            {14}, {0}, {0}, {11}
-            };
-        std::vector<std::vector<int>> e = {
-            {0}, {-1}, {0}, {0},
-            {2}, {3}, {0}, {0},
-            {2}, {3}, {0}, {0},
-            {2}, {3}, {0}, {0},
-            {0}, {3}, {0}, {-1},
-            {2}, {3}, {0}, {1},
-            {2}, {3}, {-1}, {1},
-            {-1}, {3}, {0}, {1},
-            {0}, {3}, {0}, {1},
-            {2}, {3}, {0}, {1},
-            {2}, {3}, {0}, {1},
-            {2}, {3}, {0}, {1},
-            {0}, {0}, {0}, {1},
-            {2}, {0}, {0}, {1},
-            {2}, {0}, {0}, {1},
-            {2}, {0}, {0}, {1}
-            };
-
-        for(int i=0; i<ps.size(); i++){
-            std::vector<std::tuple<double, int, int>> setScore;
-            for(int j=0; j<4; j++){
-                setScore.push_back(std::make_tuple(s[(i*4)+j][0], p[(i*4)+j][0], e[(i*4)+j][0]));
-            }
-            ps[i].scores = setScore;
-        }
-        // for(int i=0; i<ps.size(); i++){
-        //     std::cout << "======= "<< i << " =======" << std::endl;
-        //     for(int j=0; j<4; j++){
-        //         std::cout << std::get<0>(ps[i].scores[j]) <<"  " <<  std::get<1>(ps[i].scores[j]) << "  " << std::get<2>(ps[i].scores[j]) <<std::endl;
-        //     }
-        // }
-    }
-
     int find_reference(std::vector<puzzlePiece> & ps){
         double minScore = 100000; int ref_idx = -1;
         for(int i=0; i<ps.size(); i++){ 
@@ -511,7 +440,8 @@ namespace matchPuzzle{
         for(auto m : map){
             Rc = (yi + gap*row);
             for (auto ind : m ){
-                Cc = (xi + gap*col);
+                if (ind != -1){
+                  Cc = (xi + gap*col);
                 cv::Mat img = ps[ind].image;
                 // std::cout << img.rows << " :  "<<img.cols << std::endl; 
                 int refX = ps[ind].edges[0].front().x;
@@ -526,7 +456,9 @@ namespace matchPuzzle{
                                 canvas.at<cv::Vec3b>(Rc+r-refY, Cc+c-refX)[2] = img.at<cv::Vec3b>(r,c)[2];
                         }
                     }
+                }  
                 }
+                
                 col += 1;
             }
             col = 0;

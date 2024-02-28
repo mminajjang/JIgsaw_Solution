@@ -42,8 +42,6 @@ namespace matchPuzzle{
    
     void find_min_score(std::vector<puzzlePiece> & ps);
     
-    void set_score(std::vector<puzzlePiece> & ps);
-    
     int find_reference(std::vector<puzzlePiece> & ps);
     
     std::deque<std::deque<int>> find_map(std::vector<puzzlePiece> &ps);
