@@ -11,6 +11,3 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC ${CMAKE_SOURCE_DIR}/includ
 
 add_executable(${PROJECT_NAME} main.cpp src/helper.cpp src/match.cpp src/puzzle.cpp)
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_lib ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-
-add_executable(${PROJECT_NAME}_edit editing.cpp)
-target_link_libraries(${PROJECT_NAME}_edit ${PROJECT_NAME}_lib ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

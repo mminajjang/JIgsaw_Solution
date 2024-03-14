@@ -4,55 +4,20 @@ void puzzlePiece::setPiece(cv::Mat img){
 
 // TODO : 퍼즐의 회전정도에 따라 이미지 & 컨투어 & other info 회전시키기, 엣지들을 서남동북 으로 정렬
     image = img.clone(); 
-    // cols = (double)img.cols;
     contour = imageProcesser::find_contour(image);
     corners = imageProcesser::find_corner(image);
     centre = imageProcesser::find_centre(contour);
     edges = imageProcesser::find_edges(contour, corners);
     std::vector<cv::Scalar> colours = {cv::Scalar((double)255,0,0), cv::Scalar(0,(double)255,0), cv::Scalar(0,0,(double)255), cv::Scalar((double)255,0,(double)255)};
     int c = 0;
-   for(auto edge:edges){
-    for(auto e: edge){
-        cv::circle(image, e, 2, cv::Scalar::all(0), 2, 8);
-    }c++;
-   }
-    
-    // helper::show(image);
-    // cv::resize(image, image, cv::Size((int)image.rows/2, (int)image.cols/2));
-    // std::cout << edges[2].front() << "  :  " <<edges[2].back() << std::endl;
+    for(auto edge:edges){
+        for(auto e: edge){
+            cv::circle(image, e, 2, cv::Scalar::all(0), 2, 8);
+        }c++;
+    }
     edgeImgs.clear();
-    // std::vector<cv::Scalar> colours = {cv::Scalar((double)255,0,0), cv::Scalar(0,(double)255,0), cv::Scalar(0,0,(double)255), cv::Scalar((double)255,0,(double)255)};
-    // for(int i=0; i<edges.size(); i++){
-    //     double minX = 10000000; double minY = 10000000;
-    //     double maxX = 0; double maxY = 0;
-    //     for(int j=0; j<edges[i].size(); j++){
-    //         // cv::circle(image, edges[i][j], 2, colours[i], 2, 8);
-    //         if (edges[i][j].x < minX){
-    //             minX = edges[i][j].x;
-    //         }
-    //         if (edges[i][j].x > maxX){
-    //             maxX = edges[i][j].x;
-    //         }
 
-    //         if (edges[i][j].y < minY){
-    //             minY = edges[i][j].y;
-    //         }
-    //         if (edges[i][j].y > maxY){
-    //             maxY = edges[i][j].y;
-    //         }
-    //     }
-    //     double X, Y, width, height;
-    //     X = minX;
-    //     Y = minY;
-    //     width = maxX - X;
-    //     height = maxY - Y;
-    //     cv::Rect roi(X,Y,width,height);
-    //     cv::Mat edgeimg = image(roi);
-    //     edgeImgs.push_back(edgeimg);   
-    // } 
     piece_type = getPieceType(edges);
-    // std::cout << 180*check_rotated(piece_type,edges, corners)/CV_PI << std::endl;
-    // reduced_edges = reduceDimension(edges);
     transformed_edges = transformPoints(edges, image,contour);
 }
 

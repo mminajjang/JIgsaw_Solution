@@ -13,13 +13,11 @@ enum pieceType{
 
 struct puzzlePiece{
     cv::Mat image;
-    double cols;// = (double)image.cols;
     cv::Mat extract_puzzle;
     CONTOUR2f contour;
     POINTS2f corners;
     cv::Point2f centre;
     std::vector<CONTOUR2f> edges;
-    // std::vector<CONTOUR2f> transformed_edges;
     std::tuple<pieceType, int, int> piece_type;
     std::vector<cv::Mat> edgeImgs;
     std::vector<std::vector<double>> reduced_edges;
